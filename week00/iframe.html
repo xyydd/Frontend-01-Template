@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>iframe</title>
+</head>
+<body>
+  <iframe class="iframe" src="" frameborder="0"></iframe>
+  <script>
+    function isType (selector) {
+      const type = Object.prototype.toString.call(selector).replace('[object ', '')
+      // console.log(type)
+      if (type.startsWith('String')) {
+        return 'string'
+      }
+      if (type.startsWith('HTML')) {
+        return 'html'
+      } 
+    }
+    function IframeEdit (iframeSelector) {
+      this.$document = document.querySelector('iframe').contentDocument.body
+      if (Object.prototype.toString.call(iframeSelector) === '[object String]') {
+        this.$document = document.querySelector(iframeSelector).contentDocument.body
+      } else if (Object.prototype.toString.call(iframeSelector) === '[object HTMLDocument]') {
+        this.$document = iframeSelector.contentDocument.body
+      } else {
+        return new Error('必须是html元素或html标签名')
+      }
+    }
+    IframeEdit.prototype.append = function(selector) {
+      let appendDoc
+      console.log(selector, isType(selector))
+      if (isType(selector) === 'string') {
+        appendDoc = document.createElement(selector)
+      } else if (isType(selector) === 'html') {
+        appendDoc = selector
+      } else {
+        return new Error('必须是html元素或html标签名')
+      }
+      return this.$document.appendChild(appendDoc)
+    }
+    IframeEdit.prototype.remove = function(selector) {
+      let removeDoc
+      if (isType(selector) === 'string') {
+        removeDoc = this.$document.querySelector(selector)
+      } else if (isType(selector) === 'html') {
+        removeDoc = selector
+      } else {
+        return new Error('必须是html元素或html标签名')
+      }
+      return this.$document.removeChild(removeDoc)
+    }
+    IframeEdit.prototype.moveTo = function(targetSelector, target) {
+      let removeDoc
+      if (isType(targetSelector) === 'string') {
+        removeDoc = this.$document.querySelector(targetSelector)
+      } else if (isType(targetSelector) === 'html') {
+        removeDoc = targetSelector
+      } else {
+        return new Error('必须是html元素或html标签名')
+      }
+      const doc = this.$document.removeChild(removeDoc)
+      return target.appendChild(doc)
+    }
+    window.onload = function () {
+      const iFrame = new IframeEdit('.iframe')
+      // console.log(iFrame)
+      const addDIV = document.createElement('div')
+      addDIV.className = 'test'
+      const addDIV2 = document.createElement('div')
+      addDIV2.className = 'test2'
+      iFrame.append(addDIV)
+      iFrame.append(addDIV2)
+      iFrame.moveTo(iFrame.$document.querySelector('.test2'), iFrame.$document.querySelector('.test'))
+    }
+  </script>
+</body>
+</html>

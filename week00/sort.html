@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>sort</title>
+  <style>
+    #sort {
+      display: flex;
+      display: ms-flex;
+      justify-content: flex-start;
+      -webkit-box-pack: start;
+      flex-direction: row;
+      flex-wrap: wrap;
+      -webkit-box-direction: normal;
+      -webkit-box-orient: horizontal;
+      align-items: flex-end;
+      -webkit-box-align: end;
+    }
+    #sort div {
+      width: 30px;
+      background-color: red;
+      margin-right: 5px;
+    }
+  </style>
+</head>
+<body>
+<div id="sort">
+  
+</div>
+<script>
+const arr = []
+const wrapper = document.querySelector('#sort')
+for (let i = 0 ; i < 10; i++) {
+  const num = Math.floor(Math.random() * 21)
+  arr.push(num)
+  const div = document.createElement('div')
+  div.style = `height: ${num * 20}px`
+  wrapper.appendChild(div)
+}
+function quickSort (arr) {
+  if (arr.length <= 1) {
+    return arr
+  }
+  const centerIndex = Math.floor(arr.length / 2)
+  const center = arr.splice(centerIndex, 1)[0]
+  const left = []
+  const right = []
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i] < center) {
+      left.push(arr[i])
+    } else {
+      right.push(arr[i])
+    }
+  }
+  // console.log(left, right)
+  return quickSort(left).concat([center], quickSort(right))
+}
+console.log(arr)
+console.time(1)
+const sortarr = quickSort(arr)
+console.timeEnd(1)
+</script>
+</body>
+</html>
