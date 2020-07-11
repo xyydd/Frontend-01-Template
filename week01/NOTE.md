@@ -1,5 +1,27 @@
 # 每周总结可以写在这里
 
+## 学习总结
+
+### 1.HTML5
+
+Html5语义化标签，合理使用语义化标签，方便SEO和其他设备使用，比如阅读器。
+
+### 2.css选择器
+
+在css选择器中，nth-child和nth-of-type的主要区别是前者为任一子元素，后者为指定子元素，类似选择器还有：
+
+nth-last-child和nth-last-of-type、
+
+first-child和first-of-type、
+
+last-child和lastof-type、
+
+only-child和only-of-type
+
+### 3.JavaScript
+
+js整体机制分为运行时、语义、文法，平时主要关注点在运行时阶段。
+
 ## 第一课总结
 
 ### 职业规划
