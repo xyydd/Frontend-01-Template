@@ -1,7 +1,7 @@
 function UTF8_Encoding (string) {
   const res = []
   for (let i = 0; i < string.length; i++) {
-    const num = string[i].charCodeAt()
+    const num = string.codePointAt(i)
     const code2 = parseInt(num).toString(2)
     if (code2.length === 7) {
       res.push('0'+code2)
@@ -29,4 +29,4 @@ function UTF8_Encoding (string) {
   return res
 }
 
-console.log(UTF8_Encoding('一二'))
+console.log(UTF8_Encoding('😀'))
