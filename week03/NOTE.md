@@ -8,7 +8,7 @@
 
 reference包含两个部分：一个值对象，一个key（String，Symbol）,因为在delete和assign中会用到整个reference。
 
-### **乘方
+### \*\*乘方
 
 乘方是js中唯一一个右结合运算
 
