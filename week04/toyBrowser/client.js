@@ -1,5 +1,5 @@
 const net = require('net')
-
+const { parseHTML } = require('./parser.js')
 
 class Request {
   constructor (options) {
@@ -9,6 +9,7 @@ class Request {
     this.path = options.path || '/';
     this.body = options.body || {};
     this.headers = options.headers || {};
+    // console.log(this.host, this.port)
     if (!this.headers['Content-Type']) {
       this.headers['Content-Type'] = 'application/x-www-form-urlencoded';
     }
@@ -23,35 +24,38 @@ class Request {
 
   toString () {
     return `${this.method} ${this.path} HTTP/1.1\r
-    ${Object.keys(this.headers).map(key => `${key}: ${this.headers[key]}`).join('\r\n')}\r
-    \r
-    ${this.bodyText}`
+${Object.keys(this.headers).map(key => `${key}: ${this.headers[key]}`).join('\r\n')}\r
+\r
+${this.bodyText}`
   }
 
   send (connection = 0) {
     return new Promise((resolve, reject) => {
-      const parser = new ResponseRarser;
+      const responseParser = new ResponseRarser();
       if (connection) {
         connection.write(this.toString());
       } else {
         connection = net.createConnection({ // 创建新的tcp链接
           host: this.host,
-          post: this.port
+          port: this.port
         }, () => {
-          connection.write(this.toString());
+          const a = this.toString()
+          // console.log(a)
+          connection.write(a);
         });
       }
       connection.on('data', data => {
-        console.log(data.toString());
-        parser.receive(data.toString());
-        if (parser.isFinished) {
-          resolve(parser.response)
+        // console.log('data', data.toString());
+        responseParser.receive(data.toString());
+        // console.log('data', responseParser)
+        if (responseParser.isFinished) {
+          resolve(responseParser.response)
           connection.end();
         }
       });
       
       connection.on('error', err => {
-        console.log(err)
+        console.log('error', err)
         reject(err)
         connection.end();
       });
@@ -93,12 +97,14 @@ class ResponseRarser {
   }
 
   receive (string) {
-    for (let i = 0; i > string.length; i++) {
+    for (let i = 0; i < string.length; i++) {
       this.handleReceiveChar(string.charAt(i))
     }
+    // console.log('receive', this.bodyParser)
   }
 
   handleReceiveChar (char) {
+    // console.log('char', char)
     if (this.current === this.WAITING_STATUS_LINE) {
       if (char === '\r') {
         this.current = this.WAITING_STATUS_LINE_END
@@ -142,7 +148,7 @@ class ResponseRarser {
         this.current = this.WAITING_BODY
       }
     } else if (this.current === this.WAITING_BODY) {
-      console.log(char)
+      // console.log(char)
       this.bodyParser.handleReceiveChar(char)
     }
   }
@@ -208,7 +214,9 @@ void async function () {
   });
   try {
     const response = await request.send();
-    console.log(response);
+    // console.log('response', response);
+
+    let dom = parseHTML(response.body);
   } catch (err) {
     console.error(1, err)
   }
