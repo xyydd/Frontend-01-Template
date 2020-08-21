@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>api</title>
+</head>
+<body>
+<script>
+  let names = Object.getOwnPropertyNames(window)
+  function filterOut (names, props) {
+    let set = new Set()
+    props.forEach(o => set.add(o))
+    return names.filter(e => !set.has(e))
+  }
+  // js 内置api
+  {
+    let js = new Set()
+    let objects = ["globalThis","parseFloat", "parseInt", "console", "decodeURI", "decodeURIComponent", "encodeURI", "encodeURIComponent", "escape", "unescape", "eval", "isFinite", "isNaN","Infinity", "NaN", "undefined", "globalThis", "eval()", "uneval()", "isFinite()", "isNaN()", "parseFloat()", "parseInt()", "decodeURI()", "decodeURIComponent()", "encodeURI()", "encodeURIComponent()", "escape()", "unescape()", "Object", "Function", "Boolean", "Symbol", "Error", "AggregateError", "EvalError", "InternalError", "RangeError", "ReferenceError", "SyntaxError", "TypeError", "URIError", "Number", "BigInt", "Math", "Date", "String", "RegExp", "Array", "Int8Array", "Uint8Array", "Uint8ClampedArray", "Int16Array", "Uint16Array", "Int32Array", "Uint32Array", "Float32Array", "Float64Array", "BigInt64Array", "BigUint64Array", "Map", "Set", "WeakMap", "WeakSet", "ArrayBuffer", "SharedArrayBuffer", "Atomics", "DataView", "JSON", "Promise", "Generator", "GeneratorFunction", "AsyncFunction", "Reflect", "Proxy", "Intl", "Intl.Collator", "Intl.DateTimeFormat", "Intl.ListFormat", "Intl.NumberFormat", "Intl.PluralRules", "Intl.RelativeTimeFormat", "Intl.Locale", "WebAssembly", "WebAssembly.Module", "WebAssembly.Instance", "WebAssembly.Memory", "WebAssembly.Table", "WebAssembly.CompileError", "WebAssembly.LinkError", "WebAssembly.RuntimeError", "arguments"]
+    objects.forEach(o => js.add(o))
+    names = names.filter(e => !js.has(e))
+  }
+  // node
+  names = names.filter(e => {
+    try {
+      return !(window[e].prototype instanceof Node)
+    } catch (e) {
+      return true
+    }
+  }).filter(e => e != 'Node')
+  // dom 事件
+  names = names.filter(e => !e.match(/^on/))
+  // webkit 事件
+  names = names.filter(e => !e.match(/^webkit/))
+
+  // https://html.spec.whatwg.org/#window
+  {
+    objects = ['Window', 'self', 'document', 'frames', 'location', 'history', 'customElements', 'locatinbar', 'menubar', 'personalbar', 'scrollbar', 'statusbar', 'toolbar', 'status', 'focus', 'blur', 'frame', 'top', 'opener', 'parent', 'frameElement', 'navigator', 'applicationCache', 'alert', 'confirm', 'prompt', 'print', 'postMessage', 'defaultView', 'open', 'name', 'close', 'closed', 'stop', 'length']
+    names = filterOut(names, objects)
+    console.log('window', objects)
+  }
+  // webGl
+  {
+    const webGl = []
+    names = names.filter(e => {
+      if (!e.match(/^WebGL/)) {
+        return true
+      } else {
+        webGl.push(e)
+        return false
+      }
+    })
+    console.log('WebGL', webGl)
+  }
+  // IDB
+  {
+    const IDB = []
+    names = names.filter(e => {
+      if (!e.match(/^IDB/)) {
+        return true
+      } else {
+        IDB.push(e)
+        return false
+      }
+    })
+    console.log('IDB', IDB)
+  }
+  // media
+  {
+    const media = []
+    names = names.filter(e => {
+      if (!e.match(/^Media/)) {
+        return true
+      } else {
+        media.push(e)
+        return false
+      }
+    })
+    console.log('media', media)
+  }
+  // canvas
+  {
+    const canvas = []
+    names = names.filter(e => {
+      if (!e.match(/^Canvas/)) {
+        return true
+      } else {
+        canvas.push(e)
+        return false
+      }
+    })
+    console.log('canvas', canvas)
+  }
+  // bluetooth
+  {
+    const bluetooth = []
+    names = names.filter(e => {
+      if (!e.match(/^Bluetooth/)) {
+        return true
+      } else {
+        bluetooth.push(e)
+        return false
+      }
+    })
+    console.log('bluetooth', bluetooth)
+  }
+  // usb
+  {
+    const usb = []
+    names = names.filter(e => {
+      if (!e.match(/^USB/)) {
+        return true
+      } else {
+        usb.push(e)
+        return false
+      }
+    })
+    console.log('usb', usb)
+  }
+  // audio
+  {
+    const audio = []
+    names = names.filter(e => {
+      if (!e.match(/Audio/)) {
+        return true
+      } else {
+        audio.push(e)
+        return false
+      }
+    })
+    console.log('audio', audio)
+  }
+  // RTC
+  {
+    const RTC = []
+    names = names.filter(e => {
+      if (!e.match(/^RTC/)) {
+        return true
+      } else {
+        RTC.push(e)
+        return false
+      }
+    })
+    console.log('RTC', RTC)
+  }
+  //  WebXR设备API
+  {
+    const xr = []
+    names = names.filter(e => {
+      if (!e.match(/^XR/)) {
+        return true
+      } else {
+        xr.push(e)
+        return false
+      }
+    })
+    console.log('xr', xr)
+  }
+  //  Payment API
+  {
+    const Payment = []
+    names = names.filter(e => {
+      if (!e.match(/^Payment/)) {
+        return true
+      } else {
+        Payment.push(e)
+        return false
+      }
+    })
+    console.log('Payment', Payment)
+  }
+  // Web MIDI API 这是一项实验性技术，MIDI输入和输出设备
+  {
+    const MIDI = []
+    names = names.filter(e => {
+      if (!e.match(/^MIDI/)) {
+        return true
+      } else {
+        MIDI.push(e)
+        return false
+      }
+    })
+    console.log('MIDI', MIDI)
+  }
+  // Presentation API使用户代理（例如Web浏览器）可以通过大型演示设备（例如投影仪和联网电视）有效地显示Web内容
+  {
+    const Presentation = []
+    names = names.filter(e => {
+      if (!e.match(/^Presentation/)) {
+        return true
+      } else {
+        Presentation.push(e)
+        return false
+      }
+    })
+    console.log('Presentation', Presentation)
+  }
+  /* 在DeviceMotionEvent提供Web开发人员与有关设备的位置和方向变化的速度信息
+   * 在DeviceOrientationEvent为Web开发与运行网页的设备的物理方向的信息
+   * DeviceMotionEventRotationRate对象提供有关设备围绕所有三个轴旋转的速率的信息。
+   */
+  {
+    const Device = []
+    names = names.filter(e => {
+      if (!e.match(/^Device/)) {
+        return true
+      } else {
+        Device.push(e)
+        return false
+      }
+    })
+    console.log('Device', Device)
+  }
+  // SVG
+  {
+    const SVG = []
+    names = names.filter(e => {
+      if (!e.match(/^SVG/)) {
+        return true
+      } else {
+        SVG.push(e)
+        return false
+      }
+    })
+    console.log('SVG', SVG)
+  }
+  // Performance
+  {
+    const Performance = []
+    names = names.filter(e => {
+      if (!e.match(/^Performance/)) {
+        return true
+      } else {
+        Performance.push(e)
+        return false
+      }
+    })
+    console.log('Performance', Performance)
+  }
+  // CSSOM
+  {
+    const cssOM = ["AnimationEvent", "CaretPosition", "CSS", "CSSCharsetRule", "CSSConditionRule", "CSSCounterStyleRule", "CSSFontFaceRule", "CSSFontFeatureValuesMap", "CSSFontFeatureValuesRule", "CSSGroupingRule", "CSSImportRule", "CSSKeyframeRule", "CSSKeyframesRule", "CSSMarginRule", "CSSMediaRule", "CSSNamespaceRule", "CSSPageRule", "CSSRule", "CSSRuleList", "CSSStyleDeclaration", "CSSStyleSheet", "CSSStyleRule", "CSSSupportsRule", "CSSVariablesMap", "CSSViewportRule", "ElementCSSInlineStyle", "FontFace", "FontFaceSet", "FontFaceSetLoadEvent", "GeometryUtils", "GetStyleUtils", "LinkStyle", "MediaList", "MediaQueryList", "MediaQueryListEvent", "MediaQueryListListener", "Screen", "StyleSheet", "StyleSheetList", "TransitionEvent", "CSSImageValue", "CSSKeywordValue", "CSSMathInvert", "CSSMathMax", "CSSMathMin", "CSSMathNegate", "CSSMathProduct", "CSSMathSum", "CSSMathValue", "CSSMatrixComponent", "CSSNumericArray", "CSSNumericValue", "CSSPerspective", "CSSPositionValue", "CSSRotate", "CSSScale", "CSSSkew", "CSSSkewX", "CSSSkewY", "CSSStyleValue", "CSSTransformComponent", "CSSTransformValue", "CSSTranslate", "CSSUnitValue", "CSSUnparsedValue", "CSSVariableReferenceValue", "StylePropertyMap", "StylePropertyMapReadOnly", "CSSPrimitiveValue", "CSSValue", "CSSValueList"]
+    names = filterOut(names, cssOM)
+    console.log('CSSOM', cssOM)
+  }
+  // PublicKeyCredential
+  {
+    const credential = ['Credential', 'CredentialsContainer', 'PublicKeyCredential', 'AuthenticatorResponse', 'AuthenticatorAttestationResponse', 'AuthenticatorAssertionResponse']
+    names = filterOut(names, credential)
+  }
+  // https://html.spec.whatwg.org/
+  //http://www.ecma-international.org/ecma-402/5.0/index.html#Title/
+  // https://www.khronos.org/registry/webgl/specs/latest/1.0/#5.15
+  // https://www.w3.org/TR/webadio/
+  //https://encoding.spec.whatwg.org/#dom-textencoder
+  //https://streams.spec.whatwg.org/#blqs-class
+  //https://wicg.github.io/BackgroundSync/spec/#sync-manager-interface
+
+  console.log(names, names.length)
+</script>
+</body>
+</html>
