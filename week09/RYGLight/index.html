@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>RYG Light</title>
+  <style>
+    .lights {
+        width: 100%;
+        display: flex;
+        flex-wrap: nowrap;
+        flex-direction: row;
+        justify-content: flex-start;
+    }
+    .lights div {
+        width: 50px;
+        height: 50px;
+        border-radius: 25px;
+        background-color: #999;
+        margin-right: 10px;
+    }
+    .lights div.red.light {
+        background-color: red;
+    }
+    .lights div.yellow.light {
+        background-color: yellow;
+    }
+    .lights div.green.light {
+        background-color: green;
+    }
+    .lights .seconds {
+        border-radius: 0px;
+        border: 1px solid #333;
+        background-color: transparent;
+        font-size: 20px;
+        line-height: 50px;
+        text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="lights">
+    <div class="red"></div>
+    <div class="yellow"></div>
+    <div class="green"></div>
+    <div class="seconds"></div>
+  </div>
+  <script>
+    const redLight = document.querySelector('.red') // 1
+    const yellowLight = document.querySelector('.yellow') // 2
+    const greenLight = document.querySelector('.green') // 3
+    const seconds = document.querySelector('.seconds')
+    function waiting (delay) {
+      readSeconds(delay / 1000)
+      return new Promise(res => {
+        setTimeout(res, delay)
+      })
+    }
+    function changeToRed () {
+      yellowLight.classList.remove('light')
+      greenLight.classList.remove('light')
+      redLight.classList.add('light')
+    }
+    function changeToYellow () {
+      yellowLight.classList.add('light')
+      greenLight.classList.remove('light')
+      redLight.classList.remove('light')
+    }
+    function changeToGreen () {
+      yellowLight.classList.remove('light')
+      greenLight.classList.add('light')
+      redLight.classList.remove('light')
+    }
+    function changeColorAuto () {
+      changeToRed()
+      waiting(5000)
+        .then(() => {
+          changeToYellow()
+          return waiting(2000)
+        })
+        .then(() => {
+          changeToGreen()
+          return waiting(10000)
+        })
+        .then(() => {
+          changeColorAuto()
+        })
+    }
+    function readSeconds (s) {
+      seconds.innerText = --s
+      const a = setInterval(() => {
+        seconds.innerText = --s
+        if (s === 0) {
+          clearInterval(a)
+        }
+      }, 1000)
+    }
+    changeColorAuto()
+  </script>
+</body>
+</html>
