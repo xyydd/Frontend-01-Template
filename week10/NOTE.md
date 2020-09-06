@@ -6,7 +6,7 @@
 
 适合大量高重复字符串的存储与分析
 
-![image-20200906200615438](/Users/nathan/Library/Application Support/typora-user-images/image-20200906200615438.png)
+![image-20200906200615438](https://api2.mubu.com/v3/document_image/924cf9cb-6e4c-43ae-8ecb-967756376fb5-7394841.jpg)
 
 
 
