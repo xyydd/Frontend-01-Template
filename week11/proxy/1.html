@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Proxy</title>
+</head>
+<body>
+<script>
+  let obj = {
+    a: 1,
+    b: 2
+  }
+  let po = new Proxy(obj, {
+    set (obj, key, val) {
+      console.log(obj, key, val)
+      obj[key] = val
+      return obj
+    }
+  })
+  let arr = [1,2]
+  let arrpo = new Proxy(arr, {
+    set (obj, key, val) {
+      console.log(obj, key, val)
+      obj[key] = val
+      return obj
+    }
+  })
+</script>
+</body>
+</html>
