@@ -28,5 +28,11 @@ npm i -D @babel/register @babel/preset-env @babel/core
 
 ### code coverage
 
-nyc
+```shell
+npm i -D nyc
+```
+
+```shell
+nyc ./node_modules/.bin/mocha --require @babel/register
+```
 
